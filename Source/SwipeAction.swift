@@ -111,6 +111,21 @@ public class SwipeAction: NSObject {
     // MARK: - Internal
     
     internal var completionHandler: ((ExpansionFulfillmentStyle) -> Void)?
+    internal weak var button: SwipeActionButton?
+    public func setNeedsUpdateAppearance() {
+        guard let button = button else { return }
+        
+        button.tintColor = self.textColor ?? .white
+        button.titleLabel!.font = self.font ?? UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.medium)
+        
+        button.accessibilityLabel = self.accessibilityLabel
+        
+        button.setTitle(self.title, for: .normal)
+        button.setTitleColor(button.tintColor, for: .normal)
+        button.setTitleColor(self.highlightedTextColor, for: .highlighted)
+        button.setImage(self.image, for: .normal)
+        button.setImage(self.highlightedImage ?? self.image, for: .highlighted)
+    }
 }
 
 /// Describes how expansion should be resolved once the action has been fulfilled.
